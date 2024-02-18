@@ -19,9 +19,9 @@ export type Payload<T> = {
 export type Page = {
   id: number
   attributes: {
-    createdAt: Date
-    updatedAt: Date
-    publishedAt?: Date
+    createdAt: Date | string
+    updatedAt: Date | string
+    publishedAt?: Date | string
     shortName?: string
     contentSections?: any
     slug?: string

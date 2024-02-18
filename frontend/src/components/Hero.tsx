@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { getStrapiMedia } from '@/app/[lang]/_api/shared'
 import HighlightedText from '@/components/HighlightedText'
-import { getStrapiMedia } from '@/utils/api-helpers'
-import { renderButtonStyle } from '@/utils/render-button-style'
+import { renderButtonStyle } from '@/lib/render-button-style'
 
 interface Button {
   id: string

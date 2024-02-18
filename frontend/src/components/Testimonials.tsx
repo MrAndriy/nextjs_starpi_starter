@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { getStrapiMedia } from '@/utils/api-helpers'
+import { getStrapiMedia } from '@/app/[lang]/_api/shared'
 
 interface Testimonial {
   text: string

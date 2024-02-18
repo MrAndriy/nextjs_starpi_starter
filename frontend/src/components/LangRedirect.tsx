@@ -2,7 +2,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import HighlightedText from '@/components/HighlightedText'
-import { renderButtonStyle } from '@/utils/render-button-style'
+
+export function renderButtonStyle(type: string) {
+  switch (type) {
+    case 'primary':
+      return 'px-8 py-3 text-lg font-semibold rounded dark:bg-violet-400 dark:text-gray-900'
+    case 'secondary':
+      return 'px-8 py-3 text-lg font-semibold border rounded dark:border-gray-100'
+    default:
+      return 'px-8 py-3 text-lg font-semibold rounded dark:bg-violet-400 dark:text-gray-900'
+  }
+}
 
 export default function LangRedirect() {
   return (

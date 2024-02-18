@@ -1,8 +1,9 @@
 'use client'
 import { useState } from 'react'
 
-import { getStrapiURL } from '@/utils/api-helpers'
+import { getStrapiURL } from '@/app/[lang]/_api/shared'
 
+// TODO: refactor to server side for security reasons
 export default function FormSubmit({ placeholder, text }: { placeholder: string; text: string }) {
   const [email, setEmail] = useState('')
   const [successMessage, setSuccessMessage] = useState('')

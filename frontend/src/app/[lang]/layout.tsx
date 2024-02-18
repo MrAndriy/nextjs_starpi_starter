@@ -17,7 +17,6 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default async function RootLayout({ children, params: { lang = 'en' } }: PropsWithChildren & { params: { lang: string } }) {
   const global = await fetchGlobals(lang)
-
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null
   const { notificationBanner, navbar, footer } = global.data.attributes
@@ -26,7 +25,7 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 
   return (
     <html lang={lang} suppressHydrationWarning className="h-full">
-      <body className={cn('relative h-full antialiased', inter.className)}>
+      <body className={cn('relative h-full antialiased dark', inter.className)}>
         <Navbar links={navbar!.links} logoUrl={navbarLogoUrl} logoText={navbar!.navbarLogo!.logoText} />
 
         <main className="dark:bg-black dark:text-gray-100 min-h-screen">{children}</main>
@@ -48,7 +47,6 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
   const meta = await fetchGlobals(params.lang)
-
   const { metadata, favicon } = meta.data?.attributes
   const { url } = favicon.data.attributes
 

@@ -1,8 +1,12 @@
 import { Metadata } from 'next'
 import { draftMode } from 'next/headers'
+import { notFound } from 'next/navigation'
 import React from 'react'
 
 import { fetchDocs } from '@/app/[lang]/_api/fetchDocs'
+import { staticHome } from '@/app/[lang]/_static/home'
+import LangRedirect from '@/components/LangRedirect'
+import { SectionRenderer } from '@/components/section-renderer'
 import { generateMeta } from '@/lib/generateMeta'
 import type { Page, Payload } from '@/types'
 
@@ -12,50 +16,36 @@ import type { Page, Payload } from '@/types'
 // See https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
 export const dynamic = 'force-dynamic'
 
-export default async function Page({ params: { slug = 'home', lang = 'en' } }) {
+export default async function Page({ params: { slug = 'home', lang = 'en' } }: { params: { slug: string; lang: string } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
-  //TODO: past PAGE type
-  let page: Page | null = null
+  let page: Payload<Page[]> | null = null
 
   try {
-    // page = await fetchDoc<Page>({
-    //   collection: 'pages',
-    //   slug,
-    //   draft: isDraftMode,
-    // })
+    page = await fetchDocs<Payload<Page[]>>({
+      path: '/pages',
+      urlParamsObject: { filters: { slug }, locale: lang },
+    })
+    if (page.data.length == 0 && lang !== 'en') return <LangRedirect />
   } catch (error) {
-    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
+    // when deploying this template, this page needs to build before the APIs are live
     // so swallow the error here and simply render the page with fallback data where necessary
     // in production you may want to redirect to a 404  page or at least log the error somewhere
-    // console.error(error)
+    console.log('Missing or invalid credentials')
   }
 
   // if no `home` page exists, render a static one using dummy content
   // you should delete this code once you have a home page in the CMS
   // this is really only useful for those who are demoing this template
-  // if (!page && slug === 'home') {
-  //   // page = staticHome
-  // }
+  if (!page && slug === 'home') {
+    page = staticHome
+  }
 
-  //TODO: make static data for page if no data
-  // if (!page) {
-  //   return <NotFound />
-  // }
-
-  // page = await fetchDocs<Page>({
-  //   path: '/pages',
-  //   urlParamsObject: { filters: { slug }, locale: lang },
-  // })
-
-  // console.log('page', page)
-
-  return (
-    <div>
-      <div>slug {slug}</div>
-      <div>lang {lang}</div>
-    </div>
-  )
+  if (page?.data.length === 0) {
+    notFound()
+  }
+  const contentSections = page!.data[0].attributes.contentSections
+  return contentSections.map((section: any, index: number) => SectionRenderer(section, index))
 }
 
 export async function generateStaticParams() {
@@ -79,22 +69,22 @@ export async function generateMetadata({ params: { slug = 'home' } }): Promise<M
   let page: any | null = null
 
   try {
-    //   page = await fetchDoc<Page>({
-    //     collection: 'pages',
-    //     slug,
-    //     draft: isDraftMode,
-    //   })
+    page = await fetchDocs<Page>({
+      path: '/pages',
+      urlParamsObject: { filters: { slug }, locale: 'en' },
+    })
   } catch (error) {
-    //   // don't throw an error if the fetch fails
-    //   // this is so that we can render a static home page for the demo
-    //   // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
-    //   // in production you may want to redirect to a 404  page or at least log the error somewhere
+    // don't throw an error if the fetch fails
+    // this is so that we can render a static home page for the demo
+    // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
+    // in production you may want to redirect to a 404  page or at least log the error somewhere
   }
 
-  //TODO: make static data for page if no data
-  // if (!page && slug === 'home') {
-  //   page = staticHome
-  // }
+  //  make static data for page if no data
+  if (!page && slug === 'home') {
+    page = staticHome
+  }
 
+  //TODO: need properly generate meta
   return generateMeta({ doc: page })
 }
