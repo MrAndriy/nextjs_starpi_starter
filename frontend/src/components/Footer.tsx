@@ -1,29 +1,16 @@
 'use client'
+
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AiFillTwitterCircle, AiFillYoutube } from 'react-icons/ai'
 import { CgWebsite } from 'react-icons/cg'
 import { FaDiscord } from 'react-icons/fa'
 
-import Logo from './Logo'
+import Logo from '@/components/Logo'
+import type { Footer as TFooter } from '@/types/Footer'
+import type { Social } from '@/types/SocialLink'
 
-interface FooterLink {
-  id: number
-  url: string
-  newTab: boolean
-  text: string
-  social?: string
-}
-
-interface CategoryLink {
-  id: string
-  attributes: {
-    name: string
-    slug: string
-  }
-}
-
-function FooterLink({ url, text }: FooterLink) {
+function FooterLink({ url, text }: TFooter['menuLinks'][0]) {
   const path = usePathname()
   return (
     <li className="flex">
@@ -34,7 +21,7 @@ function FooterLink({ url, text }: FooterLink) {
   )
 }
 
-function CategoryLink({ attributes }: CategoryLink) {
+function CategoryLink({ attributes }: TFooter['categories']['data'][0]) {
   return (
     <li className="flex">
       <Link href={`/blog/${attributes.slug}`} className="hover:dark:text-violet-400">
@@ -44,7 +31,7 @@ function CategoryLink({ attributes }: CategoryLink) {
   )
 }
 
-function RenderSocialIcon({ social }: { social: string | undefined }) {
+function RenderSocialIcon({ social }: { social: Social | undefined }) {
   switch (social) {
     case 'WEBSITE':
       return <CgWebsite />
@@ -69,10 +56,10 @@ export default function Footer({
 }: {
   logoUrl: string | null | undefined
   logoText: string | null | undefined
-  menuLinks: Array<FooterLink>
-  categoryLinks: Array<CategoryLink>
-  legalLinks: Array<FooterLink>
-  socialLinks: Array<FooterLink>
+  menuLinks: TFooter['menuLinks']
+  categoryLinks: TFooter['categories']['data']
+  legalLinks: TFooter['legalLinks']
+  socialLinks: TFooter['socialLinks']
 }) {
   return (
     <footer className="py-6 dark:bg-black dark:text-gray-50">
@@ -85,7 +72,7 @@ export default function Footer({
           <div className="col-span-6 text-center md:text-left md:col-span-3">
             <p className="pb-1 text-lg font-medium">Categories</p>
             <ul>
-              {categoryLinks.map((link: CategoryLink) => (
+              {categoryLinks.map((link) => (
                 <CategoryLink key={link.id} {...link} />
               ))}
             </ul>
@@ -94,7 +81,7 @@ export default function Footer({
           <div className="col-span-6 text-center md:text-left md:col-span-3">
             <p className="pb-1 text-lg font-medium">Menu</p>
             <ul>
-              {menuLinks.map((link: FooterLink) => (
+              {menuLinks.map((link) => (
                 <FooterLink key={link.id} {...link} />
               ))}
             </ul>
@@ -104,7 +91,7 @@ export default function Footer({
           <div className="flex">
             <span className="mr-2">©{new Date().getFullYear()} All rights reserved</span>
             <ul className="flex">
-              {legalLinks.map((link: FooterLink) => (
+              {legalLinks.map((link) => (
                 <Link href={link.url} className="text-gray-400 hover:text-gray-300 mr-2" key={link.id}>
                   {link.text}
                 </Link>
@@ -112,7 +99,7 @@ export default function Footer({
             </ul>
           </div>
           <div className="flex justify-center pt-4 space-x-4 lg:pt-0 lg:col-end-13">
-            {socialLinks.map((link: FooterLink) => {
+            {socialLinks.map((link) => {
               return (
                 <a
                   key={link.id}
