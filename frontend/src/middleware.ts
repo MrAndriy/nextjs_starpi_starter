@@ -10,18 +10,21 @@ function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {}
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value))
 
-  // Use negotiator and intl-locale matcher to get best locale
+  // Use negotiator and intl-localematcher to get best locale
   let languages = new Negotiator({ headers: negotiatorHeaders }).languages()
   // @ts-ignore locales are readonly
   const locales: string[] = i18n.locales
+
+  // If the user has a locale that we support, return it.
+  languages = languages.map((language) => (language === 'uk' ? 'ua' : language))
   return matchLocale(languages, locales, i18n.defaultLocale)
 }
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  //   `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
-  // If you have one
+  // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
+  // // If you have one
   if (
     [
       '/manifest.json',

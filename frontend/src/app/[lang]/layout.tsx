@@ -35,7 +35,7 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 
         <Footer
           logoUrl={footerLogoUrl}
-          logoText={footer!.footerLogo!.logoText}
+          logoText={footer!.footerLogo?.logoText}
           menuLinks={footer!.menuLinks}
           categoryLinks={footer!.categories.data}
           legalLinks={footer!.legalLinks}
@@ -49,7 +49,7 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
   const meta = await fetchGlobals(params.lang)
 
-  const { metadata, favicon } = meta.data.attributes
+  const { metadata, favicon } = meta.data?.attributes
   const { url } = favicon.data.attributes
 
   return {

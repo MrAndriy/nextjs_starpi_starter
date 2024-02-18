@@ -3,7 +3,7 @@ import qs from 'qs'
 
 import { getStrapiURL, token } from './shared'
 
-export const fetchDocs = async <T>(args: { path: string; urlParamsObject?: {}; options?: {}; draft?: boolean }): Promise<T> => {
+export const fetchDocs = async <T>(args: { path: string; urlParamsObject?: { locale: string }; options?: {}; draft?: boolean }): Promise<T> => {
   const { path, urlParamsObject, options, draft } = args
 
   // //TODO: implement draft mode
@@ -30,7 +30,7 @@ export const fetchDocs = async <T>(args: { path: string; urlParamsObject?: {}; o
     }
 
     // Build request URL
-    const queryString = qs.stringify(urlParamsObject)
+    const queryString = qs.stringify({ ...urlParamsObject, locale: urlParamsObject?.locale === 'ua' ? 'uk' : urlParamsObject?.locale })
     const requestUrl = `${getStrapiURL(`/api${path}${queryString ? `?${queryString}` : ''}`)}`
 
     // Trigger API call

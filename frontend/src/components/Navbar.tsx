@@ -4,10 +4,11 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import Logo from '@/components/Logo'
+import { cn } from '@/lib/utils'
 import type { Link as LinkType } from '@/types/Link'
 import type { Navbar } from '@/types/Navbar'
 
@@ -17,10 +18,17 @@ type MobileNavLink = {
 
 function NavLink({ url, text }: LinkType) {
   const path = usePathname()
+  const normalizedPath = path.replace(/^\/[a-z]{2}(?=\/|$)/, '')
+  const isActive = normalizedPath === url || (normalizedPath === '' && url === '/')
 
   return (
     <li className="flex">
-      <Link href={url} className={`flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent ${path === url && 'dark:text-violet-400 dark:border-violet-400'}}`}>
+      <Link
+        href={url}
+        className={cn('flex items-center mx-4 -mb-1 border-b-2 dark:border-transparent text-gray-100', {
+          'dark:text-violet-400 dark:border-violet-400 text-violet-400 border-violet-400': isActive,
+        })}
+      >
         {text}
       </Link>
     </li>
