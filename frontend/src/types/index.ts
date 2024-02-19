@@ -38,6 +38,15 @@ export type Metadata = {
   metaDescription: string
 }
 
+export type GlobalGeneric<K extends string, T> = {
+  id: number
+  attributes: {
+    createdAt: Date
+    updatedAt: Date
+    locale: string
+  } & { [P in K]: T }
+}
+
 export type Global = {
   id: number
   attributes: {

@@ -53,7 +53,7 @@ function MobileNavLink({ url, text, closeMenu }: MobileNavLink) {
   )
 }
 
-export default function Navbar({ links, logoUrl, logoText }: { links: Navbar['links']; logoUrl: string | null; logoText: string | null | undefined }) {
+export default function NavbarWrapper({ links, logoUrl, logoText }: { links: Navbar['links']; logoUrl: string | null; logoText: string | null | undefined }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const closeMenu = () => {
     setMobileMenuOpen(false)

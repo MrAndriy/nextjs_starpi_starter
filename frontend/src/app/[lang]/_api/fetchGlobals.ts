@@ -1,6 +1,14 @@
-import type { Global, Payload } from '@/types'
+import type { Global, GlobalGeneric, Payload } from '@/types'
+import { Navbar } from '@/types/Navbar'
 
 import { fetchDocs } from './fetchDocs'
+
+export const fetchHeader = async ({ lang }: { lang: string }): Promise<Payload<GlobalGeneric<'navbar', Navbar>>> => {
+  const path = `/global`
+  const urlParamsObject = { populate: ['navbar.links', 'navbar.button', 'navbar.navbarLogo.logoImg'], locale: lang }
+  const navbar = await fetchDocs<Payload<GlobalGeneric<'navbar', Navbar>>>({ path, urlParamsObject })
+  return navbar
+}
 
 export const fetchGlobals = async (lang: string): Promise<Payload<Global>> => {
   const path = `/global`

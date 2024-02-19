@@ -19,14 +19,13 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
   const global = await fetchGlobals(lang)
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null
-  const { notificationBanner, navbar, footer } = global.data.attributes
-  const navbarLogoUrl = getStrapiMedia(navbar!.navbarLogo!.logoImg.data.attributes.url)
+  const { notificationBanner, footer } = global.data.attributes
   const footerLogoUrl = getStrapiMedia(footer!.footerLogo!.logoImg.data.attributes.url)
 
   return (
     <html lang={lang} suppressHydrationWarning className="h-full">
       <body className={cn('relative h-full antialiased dark', inter.className)}>
-        <Navbar links={navbar!.links} logoUrl={navbarLogoUrl} logoText={navbar!.navbarLogo!.logoText} />
+        <Navbar lang={lang} />
 
         <main className="dark:bg-black dark:text-gray-100 min-h-screen">{children}</main>
 

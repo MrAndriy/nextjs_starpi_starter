@@ -1,7 +1,6 @@
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
-import type { Payload } from '@/types'
 import type { NotificationBanner } from '@/types/NotificationBanner'
 
 function colors(type: string) {
