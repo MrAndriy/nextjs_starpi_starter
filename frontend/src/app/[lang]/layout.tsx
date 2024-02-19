@@ -9,7 +9,6 @@ import { getStrapiURL } from '@/app/[lang]/_api/shared'
 import Banner from '@/components/Banner'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
-import { getStrapiMedia } from '@/lib/api-helpers'
 import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
 import { cn } from '@/lib/utils'
 
@@ -19,8 +18,7 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
   const global = await fetchGlobals(lang)
   // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null
-  const { notificationBanner, footer } = global.data.attributes
-  const footerLogoUrl = getStrapiMedia(footer!.footerLogo!.logoImg.data.attributes.url)
+  const { notificationBanner } = global.data.attributes
 
   return (
     <html lang={lang} suppressHydrationWarning className="h-full">
@@ -31,14 +29,7 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 
         <Banner data={notificationBanner} />
 
-        <Footer
-          logoUrl={footerLogoUrl}
-          logoText={footer!.footerLogo?.logoText}
-          menuLinks={footer!.menuLinks}
-          categoryLinks={footer!.categories.data}
-          legalLinks={footer!.legalLinks}
-          socialLinks={footer!.socialLinks}
-        />
+        <Footer lang={lang} />
       </body>
     </html>
   )
