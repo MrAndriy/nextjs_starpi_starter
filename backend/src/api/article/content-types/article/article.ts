@@ -3,11 +3,8 @@
 import { Media } from '../../../../components/shared/interfaces/Media';
 import { Category } from '../../../category/content-types/category/category';
 import { Author } from '../../../author/content-types/author/author';
-import { Seo } from '../../../../components/shared/interfaces/Seo';
 import { Category_Plain } from '../../../category/content-types/category/category';
 import { Author_Plain } from '../../../author/content-types/author/author';
-import { Seo_Plain } from '../../../../components/shared/interfaces/Seo';
-import { Seo_NoRelations } from '../../../../components/shared/interfaces/Seo';
 import { AdminPanelRelationPropertyModification } from '../../../../common/schemas-to-ts/AdminPanelRelationPropertyModification';
 
 export interface Article {
@@ -20,7 +17,8 @@ export interface Article {
     category?: { data: Category };
     blocks?: any;
     authorsBio?: { data: Author };
-    seo?: Seo;
+    locale: string;
+    localizations?: { data: Article[] };
   };
 }
 export interface Article_Plain {
@@ -32,7 +30,8 @@ export interface Article_Plain {
   category?: Category_Plain;
   blocks?: any;
   authorsBio?: Author_Plain;
-  seo?: Seo_Plain;
+  locale: string;
+  localizations?: Article[];
 }
 
 export interface Article_NoRelations {
@@ -44,7 +43,8 @@ export interface Article_NoRelations {
   category?: number;
   blocks?: any;
   authorsBio?: number;
-  seo?: Seo_NoRelations;
+  locale: string;
+  localizations?: Article[];
 }
 
 export interface Article_AdminPanelLifeCycle {
@@ -56,5 +56,6 @@ export interface Article_AdminPanelLifeCycle {
   category?: AdminPanelRelationPropertyModification<Category_Plain>;
   blocks?: any;
   authorsBio?: AdminPanelRelationPropertyModification<Author_Plain>;
-  seo?: Seo_Plain;
+  locale: string;
+  localizations?: Article[];
 }

@@ -29,6 +29,14 @@ export const fetchBanner = async ({ lang }: { lang: string }): Promise<Payload<G
   return banner
 }
 
+export const fetchLayOutMeta = async (lang: string): Promise<Payload<any>> => {
+  const path = `/global`
+  const urlParamsObject = { populate: ['metadata.metaImage', 'favicon'], locale: lang }
+
+  const layoutMeta = await fetchDocs<Payload<any>>({ path, urlParamsObject })
+  return layoutMeta
+}
+
 export const fetchGlobals = async (lang: string): Promise<Payload<Global>> => {
   const path = `/global`
 

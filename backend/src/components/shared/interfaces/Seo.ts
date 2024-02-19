@@ -5,17 +5,23 @@ import { Media } from './Media';
 export interface Seo {
   metaTitle: string;
   metaDescription: string;
-  shareImage?: { data: Media };
+  metaImage: { data: Media };
+  keywords?: string;
+  structuredData?: any;
 }
 export interface Seo_Plain {
   metaTitle: string;
   metaDescription: string;
-  shareImage?: Media;
+  metaImage: Media;
+  keywords?: string;
+  structuredData?: any;
 }
 
 export interface Seo_NoRelations {
   metaTitle: string;
   metaDescription: string;
-  shareImage?: number;
+  metaImage: number;
+  keywords?: string;
+  structuredData?: any;
 }
 

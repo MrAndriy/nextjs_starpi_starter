@@ -1,3 +1,5 @@
+import { Strapi } from "@strapi/strapi";
+
 /**
  * `page-populate-middleware` middleware
  */
@@ -34,19 +36,14 @@ const populate = {
       },
     },
   },
-  seo: {
-    fields: ["metaTitle", "metaDescription"],
-    populate: { shareImage: true },
-  },
 };
-
-import { Strapi } from "@strapi/strapi";
 
 export default (config, { strapi }: { strapi: Strapi }) => {
   // Add your own logic here.
   return async (ctx, next) => {
     ctx.query = {
       populate,
+      ...ctx.query,
       filters: { ...ctx.query.filters },
       locale: ctx.query.locale,
     };

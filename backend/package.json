@@ -12,13 +12,18 @@
   "devDependencies": {},
   "dependencies": {
     "@strapi/plugin-i18n": "4.20.1",
+    "@strapi/plugin-seo": "^1.9.8",
     "@strapi/plugin-users-permissions": "4.20.1",
     "@strapi/strapi": "4.20.1",
     "better-sqlite3": "8.6.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
+    "strapi-plugin-preview-button": "^2.2.2",
+    "strapi-plugin-publisher": "^1.5.7",
+    "strapi-plugin-redirects": "^0.0.6",
     "strapi-plugin-schemas-to-ts": "^1.1.21",
+    "strapi-plugin-sitemap": "^3.0.8",
     "styled-components": "5.3.3"
   },
   "author": {

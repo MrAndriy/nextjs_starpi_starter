@@ -16,13 +16,20 @@
       "type": "text",
       "required": true
     },
-    "shareImage": {
+    "metaImage": {
       "type": "media",
       "multiple": false,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images"
       ]
+    },
+    "keywords": {
+      "type": "string",
+      "regex": "^[A-Za-zА-Яа-я]+(,\\s?[A-Za-zА-Яа-я]+)*$"
+    },
+    "structuredData": {
+      "type": "json"
     }
   }
 }

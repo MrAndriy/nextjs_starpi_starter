@@ -7,6 +7,8 @@ export const env = createEnv({
     PAGE_LIMIT: z.string(),
     STRAPI_FORM_SUBMISSION_TOKEN: z.string(),
     STRAPI_API_URL: z.string(),
+    APP_ENV: z.string().optional(),
+    APP_URL: z.string().optional(),
   },
   client: {},
   runtimeEnv: {
@@ -14,5 +16,7 @@ export const env = createEnv({
     PAGE_LIMIT: process.env.PAGE_LIMIT,
     STRAPI_FORM_SUBMISSION_TOKEN: process.env.STRAPI_FORM_SUBMISSION_TOKEN,
     STRAPI_API_URL: process.env.STRAPI_API_URL,
+    APP_ENV: process.env.APP_ENV,
+    APP_URL: process.env.APP_URL,
   },
 })

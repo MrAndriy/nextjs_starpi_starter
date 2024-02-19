@@ -244,6 +244,8 @@ export interface MetaMetadata extends Schema.Component {
   attributes: {
     metaTitle: Attribute.String & Attribute.Required;
     metaDescription: Attribute.Text & Attribute.Required;
+    metaSiteName: Attribute.String;
+    metaImage: Attribute.Media & Attribute.Required;
   };
 }
 
@@ -447,7 +449,9 @@ export interface SharedSeo extends Schema.Component {
   attributes: {
     metaTitle: Attribute.String & Attribute.Required;
     metaDescription: Attribute.Text & Attribute.Required;
-    shareImage: Attribute.Media;
+    metaImage: Attribute.Media & Attribute.Required;
+    keywords: Attribute.String;
+    structuredData: Attribute.JSON;
   };
 }
 

@@ -1,13 +1,13 @@
 import { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
+import { fetchDoc } from '@/app/[lang]/_api/fetchDoc'
 import { fetchDocs } from '@/app/[lang]/_api/fetchDocs'
 import { staticHome } from '@/app/[lang]/_static/home'
 import LangRedirect from '@/components/LangRedirect'
 import { SectionRenderer } from '@/components/section-renderer'
-import { generateMeta } from '@/lib/generateMeta'
+import { generateMeta } from '@/lib/seo'
 import type { Page, Payload } from '@/types'
 
 // This means that we can turn off Next.js data caching and instead rely solely on the Cloudflare CDN
@@ -17,16 +17,18 @@ import type { Page, Payload } from '@/types'
 export const dynamic = 'force-dynamic'
 
 export default async function Page({ params: { slug = 'home', lang = 'en' } }: { params: { slug: string; lang: string } }) {
-  const { isEnabled: isDraftMode } = draftMode()
-
-  let page: Payload<Page[]> | null = null
+  let page: Page['attributes'] | null = null
 
   try {
-    page = await fetchDocs<Payload<Page[]>>({
+    page = await fetchDoc<Page['attributes']>({
       path: '/pages',
-      urlParamsObject: { filters: { slug }, locale: lang },
+
+      urlParamsObject: {
+        filters: { slug },
+        locale: lang,
+      },
     })
-    if (page.data.length == 0 && lang !== 'en') return <LangRedirect />
+    if (!page && lang !== 'en') return <LangRedirect />
   } catch (error) {
     // when deploying this template, this page needs to build before the APIs are live
     // so swallow the error here and simply render the page with fallback data where necessary
@@ -41,37 +43,37 @@ export default async function Page({ params: { slug = 'home', lang = 'en' } }: {
     page = staticHome
   }
 
-  if (page?.data.length === 0) {
+  if (!page) {
     notFound()
   }
-  const contentSections = page!.data[0].attributes.contentSections
-  return contentSections.map((section: any, index: number) => SectionRenderer(section, index))
+
+  return page.contentSections.map((section: any, index: number) => SectionRenderer(section, index))
 }
 
 export async function generateStaticParams() {
   try {
     const pages = await fetchDocs<Payload<Page[]>>({
       path: '/pages',
-      urlParamsObject: { locale: 'en' },
+      urlParamsObject: { locale: 'en', populate: null },
     })
     const staticPages = pages.data.map((p) => p.attributes.slug)
-    console.log('staticPages', staticPages)
     return staticPages
   } catch (error) {
     return []
   }
 }
 
-export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
-  const { isEnabled: isDraftMode } = draftMode()
-
-  //TODO: get type of Page from compiled strapi
-  let page: any | null = null
+export async function generateMetadata({ params: { slug = 'home', lang = 'en' } }: { params: { lang: string; slug: string } }): Promise<Metadata> {
+  let page: Page['attributes'] | null = null
 
   try {
-    page = await fetchDocs<Page>({
+    page = await fetchDoc<Page['attributes']>({
       path: '/pages',
-      urlParamsObject: { filters: { slug }, locale: 'en' },
+      urlParamsObject: {
+        populate: ['seo', 'seo.metaImage'],
+        filters: { slug: slug || 'home' },
+        locale: lang,
+      },
     })
   } catch (error) {
     // don't throw an error if the fetch fails
@@ -81,10 +83,9 @@ export async function generateMetadata({ params: { slug = 'home' } }): Promise<M
   }
 
   //  make static data for page if no data
-  if (!page && slug === 'home') {
-    page = staticHome
-  }
+  // if (!page && slug === 'home') {
+  //   page = staticHome
+  // }
 
-  //TODO: need properly generate meta
-  return generateMeta({ doc: page })
+  return generateMeta({ doc: page as Page['attributes'] })
 }

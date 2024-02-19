@@ -1,5 +1,6 @@
 import { Footer } from './Footer'
 import { Media } from './Media'
+import { Metadata } from './Metadata'
 import { Navbar } from './Navbar'
 import { NotificationBanner } from './NotificationBanner'
 import { Seo } from './Seo'
@@ -31,11 +32,6 @@ export type Page = {
     locale: string
     localizations?: { data: Page[] }
   }
-}
-
-export type Metadata = {
-  metaTitle: string
-  metaDescription: string
 }
 
 export type GlobalGeneric<K extends string, T> = {

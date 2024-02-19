@@ -20,6 +20,7 @@ const nextConfig = {
       },
     ],
   },
+  redirects: async () => import('./redirects.mjs').then((module) => module.default()),
 }
 
 export default nextConfig

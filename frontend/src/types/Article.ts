@@ -17,6 +17,8 @@ export interface Article {
     blocks?: any
     authorsBio?: { data: Author }
     seo?: Seo
+    locale: string
+    localizations?: Article[]
   }
 }
 export interface Article_Plain {
@@ -32,6 +34,8 @@ export interface Article_Plain {
   blocks?: any
   authorsBio?: Author_Plain
   seo?: Seo_Plain
+  locale: string
+  localizations?: Article[]
 }
 
 export interface Article_NoRelations {
@@ -47,4 +51,6 @@ export interface Article_NoRelations {
   blocks?: any
   authorsBio?: number
   seo?: Seo_NoRelations
+  locale: string
+  localizations?: Article[]
 }

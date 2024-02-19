@@ -4,12 +4,13 @@ import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { PropsWithChildren, Suspense } from 'react'
 
-import { fetchGlobals } from '@/app/[lang]/_api/fetchGlobals'
-import { getStrapiURL } from '@/app/[lang]/_api/shared'
+import { fetchLayOutMeta } from '@/app/[lang]/_api/fetchGlobals'
+import { getStrapiMedia, getStrapiURL } from '@/app/[lang]/_api/shared'
 import Banner from '@/components/Banner'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
-import { mergeOpenGraph } from '@/lib/mergeOpenGraph'
+import { env } from '@/env'
+import { mergeOpenGraph } from '@/lib/seo'
 import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -34,17 +35,24 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 }
 
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
-  const meta = await fetchGlobals(params.lang)
+  const meta = await fetchLayOutMeta(params.lang)
   const { metadata, favicon } = meta.data?.attributes
   const { url } = favicon.data.attributes
 
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000/en'), //TODO: implement dynamic server url
-    title: metadata?.metaTitle,
+    metadataBase: new URL(`${env.APP_URL || 'http://localhost:3000'}`),
+    title: {
+      template: `%s - ${metadata?.metaTitle}`,
+      default: metadata?.metaTitle as string,
+    },
     description: metadata?.metaDescription,
     icons: {
       icon: [new URL(url, getStrapiURL())],
     },
-    openGraph: mergeOpenGraph(),
+    openGraph: mergeOpenGraph({
+      images: [{ url: getStrapiMedia(metadata.metaImage.data.attributes.url) as string }],
+      type: 'website',
+      siteName: metadata?.metaSiteName ? metadata.metaSiteName : undefined,
+    }),
   }
 }
