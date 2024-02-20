@@ -30,6 +30,7 @@ export function middleware(request: NextRequest) {
       '/manifest.json',
       '/favicon.ico',
       '/robots.txt',
+      '/next/revalidate',
       // Your other files in `public`
     ].includes(pathname)
   )

@@ -96,7 +96,7 @@ export default function NavbarWrapper({ links, logoUrl, logoText }: { links: Nav
             </div>
           </Dialog.Panel>
         </Dialog>
-        <button className="p-4 lg:hidden" onClick={() => setMobileMenuOpen(true)}>
+        <button className="p-4 lg:hidden" aria-label="Open mobile menu" onClick={() => setMobileMenuOpen(true)}>
           <Bars3Icon className="h-7 w-7 text-gray-100" aria-hidden="true" />
         </button>
       </div>

@@ -1,23 +1,8 @@
 import Link from 'next/link'
 
-interface Category {
-  id: number
-  attributes: {
-    name: string
-    slug: string
-    articles: {
-      data: Array<{}>
-    }
-  }
-}
-
-interface Article {
-  id: number
-  attributes: {
-    title: string
-    slug: string
-  }
-}
+import ShouldRender from '@/components/ShouldRender'
+import { Article } from '@/types/Article'
+import { Category } from '@/types/Category'
 
 function selectedFilter(current: string, selected: string) {
   return current === selected
@@ -43,14 +28,15 @@ export default function ArticleSelect({
 
       <div>
         <div className="flex flex-wrap py-6 space-x-2 dark:border-gray-400">
-          {categories.map((category: Category) => {
-            if (category.attributes.articles.data.length === 0) return null
-            return (
-              <Link key={category.attributes.slug} href={`/blog/${category.attributes.slug}`} className={selectedFilter(category.attributes.slug, params.category)}>
-                #{category.attributes.name}
-              </Link>
-            )
-          })}
+          <ShouldRender if={categories.length}>
+            {categories.map((category: Category) => {
+              return (
+                <Link key={category.attributes.slug} href={`/blog/${category.attributes.slug}`} className={selectedFilter(category.attributes.slug as string, params.category)}>
+                  #{category.attributes.name}
+                </Link>
+              )
+            })}
+          </ShouldRender>
           <Link href={'/blog'} className={selectedFilter('', 'filter')}>
             #all
           </Link>
@@ -59,8 +45,8 @@ export default function ArticleSelect({
         <div className="space-y-2">
           <h4 className="text-lg font-semibold">Other Posts You May Like</h4>
           <ul className="ml-4 space-y-1 list-disc">
-            {articles.map((article: Article) => {
-              return (
+            <ShouldRender if={articles.length}>
+              {articles.map((article) => (
                 <li key={article.attributes.slug}>
                   <Link
                     rel="noopener noreferrer"
@@ -70,8 +56,8 @@ export default function ArticleSelect({
                     {article.attributes.title}
                   </Link>
                 </li>
-              )
-            })}
+              ))}
+            </ShouldRender>
           </ul>
         </div>
       </div>

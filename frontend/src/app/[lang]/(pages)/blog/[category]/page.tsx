@@ -4,6 +4,10 @@ import PageHeader from '@/components/PageHeader'
 import { Payload } from '@/types'
 import { Article } from '@/types/Article'
 
+// Force this page to be dynamic so that Next.js does not cache it
+// See the note in '../[slug]/page.tsx' about this
+export const dynamic = 'force-dynamic'
+
 async function fetchPostsByCategory({ page, limit, filter, lang }: { page: number; limit: number; filter: string; lang: string }) {
   const skip = (page - 1) * limit
   const path = `/articles`

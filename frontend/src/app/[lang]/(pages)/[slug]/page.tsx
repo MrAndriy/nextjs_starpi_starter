@@ -57,6 +57,7 @@ export async function generateStaticParams() {
       urlParamsObject: { locale: 'en', populate: null },
     })
     const staticPages = pages.data.map((p) => p.attributes.slug)
+    console.log('[slug] generateStaticParams', staticPages)
     return staticPages
   } catch (error) {
     return []

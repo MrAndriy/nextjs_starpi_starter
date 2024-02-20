@@ -1,4 +1,4 @@
-import { Page, Payload } from '@/types'
+import { Page } from '@/types'
 
 export const staticHome: Page['attributes'] = {
   shortName: 'Home Page',
@@ -99,5 +99,5 @@ export const staticHome: Page['attributes'] = {
       submitButton: { id: 3, text: 'Submit', type: 'primary' },
     },
   ],
-  seo: { id: 18, metaTitle: 'Static Meta data', metaDescription: 'Static meta description', shareImage: { data: null } },
+  seo: { id: 18, metaTitle: 'Static Meta data', metaDescription: 'Static meta description', metaImage: { data: null } },
 }

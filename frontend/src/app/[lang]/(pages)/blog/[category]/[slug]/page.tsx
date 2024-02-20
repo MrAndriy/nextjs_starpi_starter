@@ -27,7 +27,6 @@ async function getPostBySlug({ slug, lang }: { slug: string; lang: string }) {
     },
   }
   const response = await fetchDoc<Article['attributes']>({ path, urlParamsObject })
-  console.log('response', response)
   return response
 }
 

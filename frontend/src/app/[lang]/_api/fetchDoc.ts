@@ -4,14 +4,14 @@ import { env } from '@/env'
 
 import { getStrapiURL } from './shared'
 
-export const fetchDoc = async <T>(args: { path: string; urlParamsObject?: { locale: string; [key: string]: any }; options?: {}; draft?: boolean }): Promise<T | null> => {
+export const fetchDoc = async <T>(args: { path: string; urlParamsObject?: { locale?: string; [key: string]: any }; options?: {}; draft?: boolean }): Promise<T | null> => {
   const { path, urlParamsObject, options, draft } = args
 
   try {
     // Merge default and user options
     const mergedOptions: RequestInit = {
       next: {
-        // revalidate: 60, //TODO: implement revalidate?
+        // revalidate: 60 * 60 * 1, // 1 hours
         tags: [`${path}_${urlParamsObject!.filters.slug}`],
       },
       cache: 'no-cache',

@@ -3,9 +3,9 @@ import { Article, Article_Plain } from './Article'
 export type Category = {
   id: number
   attributes: {
-    createdAt: Date
-    updatedAt: Date
-    publishedAt?: Date
+    createdAt: Date | string
+    updatedAt: Date | string
+    publishedAt?: Date | string
     name?: string
     slug?: string
     articles: { data: Article[] }
@@ -14,9 +14,9 @@ export type Category = {
 }
 export type Category_Plain = {
   id: number
-  createdAt: Date
-  updatedAt: Date
-  publishedAt?: Date
+  createdAt: Date | string
+  updatedAt: Date | string
+  publishedAt?: Date | string
   name?: string
   slug?: string
   articles: Article_Plain[]
@@ -25,9 +25,9 @@ export type Category_Plain = {
 
 export type Category_NoRelations = {
   id: number
-  createdAt: Date
-  updatedAt: Date
-  publishedAt?: Date
+  createdAt: Date | string
+  updatedAt: Date | string
+  publishedAt?: Date | string
   name?: string
   slug?: string
   articles: number[]

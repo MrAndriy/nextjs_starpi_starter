@@ -4,7 +4,7 @@ import { env } from '@/env'
 
 import { getStrapiURL } from './shared'
 
-export const fetchDocs = async <T>(args: { path: string; urlParamsObject?: { locale: string; [key: string]: any }; options?: {}; draft?: boolean }): Promise<T> => {
+export const fetchDocs = async <T>(args: { path: string; urlParamsObject?: { locale?: string; [key: string]: any }; options?: {}; draft?: boolean }): Promise<T> => {
   const { path, urlParamsObject, options, draft } = args
 
   // //TODO: implement draft mode

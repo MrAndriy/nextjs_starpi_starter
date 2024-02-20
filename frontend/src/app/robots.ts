@@ -25,6 +25,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: '/*?page=', // Disallow all pages with query parameters page
       },
     ],
-    sitemap: `${env.STRAPI_API_URL}/api/sitemap/index.xml`,
+    sitemap: `${env.NEXT_PUBLIC_STRAPI_API_URL}/api/sitemap/index.xml`,
   }
 }

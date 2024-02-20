@@ -63,13 +63,13 @@ export default async function Footer({ lang }: { lang: string }) {
           <ShouldRender if={legalLinks.length}>
             <div className="flex">
               <span className="mr-2">©{new Date().getFullYear()} All rights reserved</span>
-              <ul className="flex">
+              <div className="flex">
                 {legalLinks.map((link) => (
                   <Link href={link.url} className="text-gray-400 hover:text-gray-300 mr-2" key={link.id}>
                     {link.text}
                   </Link>
                 ))}
-              </ul>
+              </div>
             </div>
           </ShouldRender>
 
