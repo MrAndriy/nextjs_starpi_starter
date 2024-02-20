@@ -13,6 +13,8 @@ export type Payload<T> = {
       pageSize: number
       pageCount: number
       total: number
+      limit: number
+      start: number
     }
   }
 }

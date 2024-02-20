@@ -1,6 +1,8 @@
 import qs from 'qs'
 
-import { getStrapiURL, token } from './shared'
+import { env } from '@/env'
+
+import { getStrapiURL } from './shared'
 
 export const fetchDoc = async <T>(args: { path: string; urlParamsObject?: { locale: string; [key: string]: any }; options?: {}; draft?: boolean }): Promise<T | null> => {
   const { path, urlParamsObject, options, draft } = args
@@ -10,12 +12,12 @@ export const fetchDoc = async <T>(args: { path: string; urlParamsObject?: { loca
     const mergedOptions: RequestInit = {
       next: {
         // revalidate: 60, //TODO: implement revalidate?
-        // tags: [`${path}`],
+        tags: [`${path}_${urlParamsObject!.filters.slug}`],
       },
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${env.STRAPI_API_TOKEN}`,
       },
       ...options,
     }

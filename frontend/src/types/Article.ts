@@ -3,12 +3,12 @@ import { Category, Category_Plain } from './Category'
 import { Media } from './Media'
 import { Seo, Seo_NoRelations, Seo_Plain } from './Seo'
 
-export interface Article {
+export type Article = {
   id: number
   attributes: {
-    createdAt: Date
-    updatedAt: Date
-    publishedAt?: Date
+    createdAt: Date | string | undefined
+    updatedAt: Date | string | undefined
+    publishedAt?: Date | string | undefined
     title?: string
     description: string
     slug?: string
@@ -23,9 +23,9 @@ export interface Article {
 }
 export interface Article_Plain {
   id: number
-  createdAt: Date
-  updatedAt: Date
-  publishedAt?: Date
+  createdAt: Date | string
+  updatedAt: Date | string
+  publishedAt?: Date | string
   title?: string
   description: string
   slug?: string
@@ -40,9 +40,9 @@ export interface Article_Plain {
 
 export interface Article_NoRelations {
   id: number
-  createdAt: Date
-  updatedAt: Date
-  publishedAt?: Date
+  createdAt: Date | string
+  updatedAt: Date | string
+  publishedAt?: Date | string
   title?: string
   description: string
   slug?: string

@@ -1,14 +1,12 @@
 import { env } from '@/env'
 
-export const API_URL = env.STRAPI_API_URL
+export const API_URL = env.NEXT_PUBLIC_STRAPI_API_URL
 
 export function getStrapiURL(path = '') {
-  return `${env.STRAPI_API_URL || 'http://localhost:1337'}${path}`
+  return `${env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337'}${path}`
 }
 
-export const token = env.STRAPI_API_TOKEN
-
-export function getStrapiMedia(url: string | null) {
+export function getStrapiMedia(url: string | null | undefined) {
   if (url == null) {
     return null
   }
