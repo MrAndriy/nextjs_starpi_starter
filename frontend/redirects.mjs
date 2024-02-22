@@ -11,6 +11,9 @@ const strapiRedirects = async () => {
       }))
 
       return redirects ?? []
+    }).catch((error) => {
+      console.error('Error fetching redirects:', error.message)
+      return []
     })
 }
 

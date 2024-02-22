@@ -57,12 +57,16 @@ export default async function LayoutRoute({ params, children }: PropsWithChildre
 }
 
 export async function generateStaticParams() {
-  const articleResponse = await fetchDocs<Payload<Article[]>>({
+  const { data } = await fetchDocs<Payload<Article[]>>({
     path: '/articles',
     urlParamsObject: {
       populate: ['category'],
     },
   })
-  const data = articleResponse.data.map((article) => ({ slug: article.attributes.slug, category: article.attributes.category?.data.attributes.slug }))
-  return data
+
+  const articleResponse = data.map(({ attributes }) => {
+    return { slug: attributes.slug, category: attributes.category?.data?.attributes?.slug }
+  })
+
+  return articleResponse
 }

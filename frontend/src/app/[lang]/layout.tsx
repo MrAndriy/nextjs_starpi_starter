@@ -36,7 +36,8 @@ export default async function RootLayout({ children, params: { lang = 'en' } }: 
 
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
   const meta = await fetchLayOutMeta(params.lang)
-  const { metadata, favicon } = meta.data?.attributes
+  //TODO: provide static meta if no data
+  const { metadata, favicon } = meta?.data?.attributes
   const { url } = favicon.data.attributes
 
   return {

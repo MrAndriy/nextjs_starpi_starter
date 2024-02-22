@@ -36,7 +36,7 @@ const getBlogData = async ({ page, limit, lang }: { page: number; limit: number;
 
 export default async function Profile({ params, searchParams }: { params: { lang: string }; searchParams?: { [key: string]: string | string[] | undefined } }) {
   const page = typeof searchParams?.page === 'string' ? Number(searchParams.page) : 0
-  const limit = typeof searchParams?.limit === 'string' ? Number(searchParams.limit) : 10
+  const limit = typeof searchParams?.limit === 'string' ? Number(searchParams.limit) : 6
   // const search = typeof searchParams?.search === 'string' ? searchParams.search : undefined // TODO: implement search
   const { data, meta } = await getBlogData({ page, limit, lang: params.lang })
 

@@ -56,8 +56,9 @@ export async function generateStaticParams() {
       path: '/pages',
       urlParamsObject: { locale: 'en', populate: null },
     })
-    const staticPages = pages.data.map((p) => p.attributes.slug)
-    console.log('[slug] generateStaticParams', staticPages)
+    const staticPages = pages?.data.map((p) => ({
+      slug: p.attributes.slug,
+    }))
     return staticPages
   } catch (error) {
     return []
@@ -84,9 +85,9 @@ export async function generateMetadata({ params: { slug = 'home', lang = 'en' } 
   }
 
   //  make static data for page if no data
-  // if (!page && slug === 'home') {
-  //   page = staticHome
-  // }
+  if (!page && slug === 'home') {
+    page = staticHome
+  }
 
   return generateMeta({ doc: page as Page['attributes'] })
 }

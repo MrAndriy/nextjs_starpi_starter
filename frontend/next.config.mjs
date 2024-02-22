@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.pexels.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
   redirects: async () => import('./redirects.mjs').then((module) => module.default()),

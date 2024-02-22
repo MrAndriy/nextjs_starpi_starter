@@ -4,6 +4,8 @@ import { fetchDoc } from '@/app/[lang]/_api/fetchDoc'
 import Post from '@/components/Blog/blog'
 import { Article } from '@/types/Article'
 
+export const dynamic = 'force-dynamic'
+
 async function getPostBySlug({ slug, lang }: { slug: string; lang: string }) {
   const path = `/articles`
   const urlParamsObject = {
